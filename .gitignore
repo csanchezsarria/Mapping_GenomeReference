@@ -1,0 +1,42 @@
+# Snakemake internals
+.snakemake/
+.snakejob.*
+*.snakemake_timestamp
+
+# Conda / Mamba environments (if created locally)
+.conda/
+conda_envs/
+env/
+venv/
+
+# Logs and reports
+logs/
+report.html
+report.zip
+
+# Results (keep directory but ignore contents; add exceptions if you want to track some files)
+results/*
+!results/.gitkeep
+
+# Large data / references / BLAST DBs (adjust to your layout)
+data/
+db/
+*.nhr
+*.nin
+*.nsq
+*.ndb
+*.not
+*.ntf
+*.nto
+
+# Generated figures / DAGs
+*.svg
+*.pdf
+*.png
+
+# Python cache and OS junk
+__pycache__/
+*.py[cod]
+*.egg-info/
+.DS_Store
+Thumbs.db
