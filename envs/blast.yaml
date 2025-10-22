@@ -1,0 +1,8 @@
+name: cassava-refmap
+channels: [conda-forge, bioconda]
+dependencies:
+  - python >=3.9
+  - blast
+  - samtools
+  - pyfaidx
+  - pandas

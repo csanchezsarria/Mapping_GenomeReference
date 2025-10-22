@@ -1,0 +1,38 @@
+# ---------------------------------------------
+# # I/O and mapping direction
+# ---------------------------------------------
+input_file: "input_snps.txt"       # Path to the SNP ID list (one per line)
+work_dir: "results"                # All intermediate and final outputs go here
+from_ref: "v6"                     # Source reference (where SNPs are defined)
+to_ref: "v8"                       # Target reference (where positions are mapped)
+flank: 500                         # Window size on each side of SNP (total = 2*flank+1)
+chrom_prefix: "C"                  # Default prefix builder (e.g., S + 13 -> S13) if per-ref header missing
+
+# ---------------------------------------------
+# Config params
+# ---------------------------------------------
+blast:                             # BLAST behavior for mapping flanks to target genome
+  task: "blastn"                   # BLAST program/task to use
+  evalue: 1e-20                    # E-value cutoff
+  max_target_seqs: 5               # Keep up to N best targets per query
+  perc_identity: 95.0              # Minimum percent identity (set 100.0 for exact matches)
+  dust: "no"                       # Disable DUST masking on queries
+  threads: 8                       # Threads for BLAST
+  mem: 16                          # Memory hint (GB) for schedulers; not enforced by Snakemake
+
+# Hit selection policy
+hit_policy:                        # How to choose the final hit if multiple alignments exist
+  full_identity: false             # true → only accept 100% identity hits
+  tie_break: "bitscore_then_len"   # Tiebreak rule (alternatives: longest | leftmost)
+
+# Reference FASTAs and their chromosome naming conventions
+references:
+  v6:
+    fasta: "/datas3/Cassava/Cassava_basics/Reference/ReferenceGenome_6.1/assembly/Mesculenta_305_v6.chromosomes.fa"
+    header: { prefix: "Chromosome", zpad: 2 }
+  v7:
+    fasta: "/datas3/Cassava/Cassava_basics/Reference/ReferenceGenome_7.1/assembly/Mesculenta_520_v7.1.chromosomes.fa"
+    header: { prefix: "Chromosome", zpad: 2 }
+  v8:
+    fasta: "/datas3/Cassava/Cassava_basics/Reference/ReferenceGenome_8.1/assembly/Mesculenta_671_v8.0.chromosomes.fa"
+    header: { prefix: "Chromosome", zpad: 2 }
